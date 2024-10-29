@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .import forms
 from .import models
+from django.db.models import Q
 
 def add_post(request):
     if request.method == 'POST':
@@ -37,16 +38,11 @@ def delete_post(request, id):
 
 def search_post(request):
     query = request.GET.get('q')
-    search_by = request.GET.get('search_by')
+    print(query)
     
     if query:
-        if search_by == 'title':
-            results = models.Post.objects.filter(title__icontains=query)
-        elif search_by == 'category':
-            results = models.Post.objects.filter(category__icontains=query)
-        else:
-            results = models.Post.objects.none()
+        posts = models.Post.objects.filter(Q(title__icontains=query) | Q(category__name__icontains=query))
     else:
-        results = models.Post.objects.all()
+        posts = models.Post.objects.all()
     
-    return render(request, 'search_results.html', {'results': results, 'query': query, 'search_by': search_by})
+    return render(request, 'search_results.html', {'posts': posts, 'query': query,})

@@ -60,10 +60,11 @@
           <form class="d-flex" method="get" action="{% url 'search_post' %}">
             <input
               class="form-control me-2"
-              type="search"
+              type="text"
+              name = "q"
               placeholder="Search"
               aria-label="Search"
-              name = "q"
+              value="{{ query }}"
             />
             <button class="btn btn-outline-success" type="submit">
               Search

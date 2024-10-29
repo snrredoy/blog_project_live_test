@@ -1,0 +1,13 @@
+<h1>Search Results</h1>
+{% if query %}
+    <p>Results for "{{ query }}" in {{ search_by }}</p>
+    <ul>
+        {% for post in results %}
+            <li><a href="">{{ post.title }}</a> - {{ post.category }}</li>
+        {% empty %}
+            <li>No results found.</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No search query provided.</p>
+{% endif %}
